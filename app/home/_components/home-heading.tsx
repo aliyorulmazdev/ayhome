@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { ArrowRightIcon } from "lucide-react";
-import { HomeAlertDialog } from "./home-alert-dialog";
+import Link from "next/link";
 import { HomeLights } from "./home-lights";
 
 export const HomeHeading = () => {
@@ -17,17 +17,19 @@ export const HomeHeading = () => {
         Manage your home effortlessly. Control lights, appliances, and more with
         innovative automation.
       </h3>
-      <Button
-        onClick={() => {
-          toast({
-            title: "Your Request has been received",
-            description: "We will contact you as soon as possible.",
-          });
-        }}
-      >
-        Want us to Call You ?
-      </Button>
-      <HomeLights />
+      <Link href="/home">
+        <Button
+          onClick={() => {
+            toast({
+              title: "Your Request has been received",
+              description: "We will contact you as soon as possible.",
+            });
+          }}
+        >
+          Want us to Call You ?
+          <ArrowRightIcon className="h-4 w-4 ml-2" />
+        </Button>
+      </Link>
     </div>
   );
 };

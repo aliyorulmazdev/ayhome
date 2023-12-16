@@ -3,12 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export const Heading = () => {
   return (
     <div className="max-w-3xl space-y-4">
       <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
-        Elevate Your Living Space with Intelligent Automation. Welcome to{" "}
+        Elevate Your Living Space with Intelligent Automation. Welcome to
         <span className="underline">ayHome</span>.
       </h1>
       <h3 className="text-base sm:text-xl md:text-2xl font-medium">
