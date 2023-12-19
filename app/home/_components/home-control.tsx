@@ -6,8 +6,8 @@ import { RoomControlCard } from "./room-control-card";
 
 export const HomeControl = () => {
   const rooms = ["LivingRoom", "Kitchen", "Bedroom", "Hallway"];
-  const gardens = ["Front Garden", "Back Garden"];
-  const garages = ["Front Garage", "Back Garage"];
+  const gardens = ["FrontGarden", "BackGarden"];
+  const garages = ["FrontGarage", "BackGarage"];
 
   return (
     <div className="lg:grid lg:grid-cols-2 lg:gap-4 flex flex-col items-center gap-y-5">

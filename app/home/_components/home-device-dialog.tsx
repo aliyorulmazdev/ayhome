@@ -17,7 +17,7 @@ import { Eye, EyeOff } from "lucide-react";
 interface HomeDeviceDialogProps {
   roomName: string;
   action: "open" | "close";
-  deviceType: "light" | "blind" | "shutter";
+  deviceType: "light" | "blind" | "shutter" | "garden" | "garage";
   controlDeviceText: string;
   onStatusUpdate?: () => void; // Yeni eklenen prop
 }
@@ -83,7 +83,7 @@ export const HomeDeviceDialog: React.FC<HomeDeviceDialogProps> = ({
             <AlertDialogTitle>{`Are you sure you want to ${action} the ${deviceType} in the ${roomName}?`}</AlertDialogTitle>
             <AlertDialogDescription>
               {`This action will `}
-              <span className="text-black dark:text-white">{`${action} the ${deviceType}`}</span>
+              <span className="text-black dark:text-white">{`${controlDeviceText}`}</span>
               {` in the ${roomName}.`}
             </AlertDialogDescription>
           </AlertDialogHeader>
