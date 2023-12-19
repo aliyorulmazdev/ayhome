@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { ArrowRightIcon } from "lucide-react";
 import Link from "next/link";
-import { HomeLights } from "./home-lights";
+import { HomeLights } from "./home-control";
 
 export const HomeHeading = () => {
   return (

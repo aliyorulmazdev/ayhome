@@ -2,10 +2,9 @@
 
 import { GarageControlCard } from "./garage-control-card";
 import { GardenControlCard } from "./garden-control-card";
-import { HomeAlertDialog } from "./home-alert-dialog";
 import { RoomControlCard } from "./room-control-card";
 
-export const HomeLights = () => {
+export const HomeControl = () => {
   const rooms = ["LivingRoom", "Kitchen", "Bedroom", "Hallway"];
   const gardens = ["Front Garden", "Back Garden"];
   const garages = ["Front Garage", "Back Garage"];

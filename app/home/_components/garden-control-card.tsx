@@ -2,10 +2,7 @@
 
 import * as React from "react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { HomeAlertDialog } from "./home-alert-dialog";
 import { RoomTemperatureCard } from "./room-temperature-card";
-import { HomeShutterDialog } from "./home-shutter-dialog";
-import { HomeBlindDialog } from "./home-blind-dialog";
 import { GardenWateringDialog } from "./home-garden-watering-dialog";
 
 interface GardenControlCardProps {

@@ -1,17 +1,107 @@
-// "use client";
 import * as React from "react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { HomeAlertDialog } from "./home-alert-dialog";
 import { RoomTemperatureCard } from "./room-temperature-card";
-import { HomeShutterDialog } from "./home-shutter-dialog";
-import { HomeBlindDialog } from "./home-blind-dialog";
-import { GardenWateringDialog } from "./home-garden-watering-dialog";
+import { HomeDeviceDialog } from "./home-device-dialog";
 
 interface RoomControlCardProps {
   roomName: string;
 }
 
 export function RoomControlCard({ roomName }: RoomControlCardProps) {
+  const [lightStatus, setLightStatus] = React.useState<string | null>(null);
+  const [blindStatus, setBlindStatus] = React.useState<string | null>(null);
+  const [shutterStatus, setShutterStatus] = React.useState<string | null>(null);
+
+  const fetchDeviceStatus = async (deviceType: string) => {
+    try {
+      const response = await fetch(
+        "http://localhost:3535/api/get-device-status",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ roomName, deviceType }),
+        }
+      );
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          const actionText =
+            result.data.action === "open" ? "Opened" : "Closed";
+
+          switch (deviceType) {
+            case "light":
+              setLightStatus(`Last status for Lights: ${actionText}`);
+              break;
+            case "blind":
+              setBlindStatus(`Last status for Blinds: ${actionText}`);
+              break;
+            case "shutter":
+              setShutterStatus(`Last status for Shutters: ${actionText}`);
+              break;
+            default:
+              break;
+          }
+        } else {
+          switch (deviceType) {
+            case "light":
+              setLightStatus(`No data found for Lights`);
+              break;
+            case "blind":
+              setBlindStatus(`No data found for Blinds`);
+              break;
+            case "shutter":
+              setShutterStatus(`No data found for Shutters`);
+              break;
+            default:
+              break;
+          }
+        }
+      } else {
+        switch (deviceType) {
+          case "light":
+            setLightStatus(`Error fetching device status for Lights`);
+            break;
+          case "blind":
+            setBlindStatus(`Error fetching device status for Blinds`);
+            break;
+          case "shutter":
+            setShutterStatus(`Error fetching device status for Shutters`);
+            break;
+          default:
+            break;
+        }
+      }
+    } catch (error) {
+      switch (deviceType) {
+        case "light":
+          setLightStatus(`Error during API request for Lights`);
+          break;
+        case "blind":
+          setBlindStatus(`Error during API request for Blinds`);
+          break;
+        case "shutter":
+          setShutterStatus(`Error during API request for Shutters`);
+          break;
+        default:
+          break;
+      }
+      console.error(`Error during API request for ${deviceType}:`, error);
+    }
+  };
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      await fetchDeviceStatus("light");
+      await fetchDeviceStatus("blind");
+      await fetchDeviceStatus("shutter");
+    };
+
+    fetchData();
+  }, [fetchDeviceStatus]);
+
   return (
     <Card>
       <CardTitle className="text-lg font-semibold m-2">
@@ -20,54 +110,85 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
       <CardContent className="flex flex-col items-center">
         {/* First row with two dialogs on larger screens */}
         <div className="flex lg:flex-wrap justify-center">
-          <HomeShutterDialog
-            roomName={roomName}
-            action="open"
-            controlShuttersText={`Turn Shutters On`}
-          />
-           <div className="ml-3"></div>
-          <HomeShutterDialog
-            roomName={roomName}
-            action="close"
-            controlShuttersText={`Turn Shutters Off`}
-          />
+          {shutterStatus && (
+            <>
+              {shutterStatus.includes("Closed") && (
+                <HomeDeviceDialog
+                  roomName={roomName}
+                  action="open"
+                  deviceType="shutter"
+                  controlDeviceText={`Turn Shutters On`}
+                  onStatusUpdate={() => fetchDeviceStatus("shutter")}
+                />
+              )}
+              {shutterStatus.includes("Open") && (
+                <HomeDeviceDialog
+                  roomName={roomName}
+                  action="close"
+                  deviceType="shutter"
+                  controlDeviceText={`Turn Shutters Off`}
+                  onStatusUpdate={() => fetchDeviceStatus("shutter")}
+                />
+              )}
+            </>
+          )}
         </div>
+
         {/* Separator */}
         <div className="w-full border-t my-4"></div>
         {/* Second row with two dialogs on larger screens */}
         <div className="flex lg:flex-wrap justify-center">
-          <HomeAlertDialog
-            roomName={roomName}
-            action="on"
-            controlLightsText={`Turn Lights On`}
-          />
-          <div className="ml-3"></div>
-          <HomeAlertDialog
-            roomName={roomName}
-            action="off"
-            controlLightsText={`Turn Lights Off`}
-          />
+          {lightStatus && (
+            <>
+              {lightStatus.includes("Closed") && (
+                <HomeDeviceDialog
+                  roomName={roomName}
+                  action="open"
+                  deviceType="light"
+                  controlDeviceText={`Turn Lights On`}
+                  onStatusUpdate={() => fetchDeviceStatus("light")}
+                />
+              )}
+              {lightStatus.includes("Open") && (
+                <HomeDeviceDialog
+                  roomName={roomName}
+                  action="close"
+                  deviceType="light"
+                  controlDeviceText={`Turn Lights Off`}
+                  onStatusUpdate={() => fetchDeviceStatus("light")}
+                />
+              )}
+            </>
+          )}
         </div>
-                {/* Separator */}
-                <div className="w-full border-t my-4"></div>
-        {/* Second row with two dialogs on larger screens */}
+        {/* Separator */}
+        <div className="w-full border-t my-4"></div>
+        {/* Third row with two dialogs on larger screens */}
         <div className="flex lg:flex-wrap justify-center">
-          <HomeBlindDialog
-            roomName={roomName}
-            action="open"
-            controlBlindsText={`Turn Blinds On`}
-          />
-          <div className="ml-3"></div>
-          <HomeBlindDialog
-            roomName={roomName}
-            action="close"
-            controlBlindsText={`Turn Blinds Off`}
-          />
+          {blindStatus && (
+            <>
+              {blindStatus.includes("Closed") && (
+                <HomeDeviceDialog
+                  roomName={roomName}
+                  deviceType="blind"
+                  action="open"
+                  controlDeviceText={`Turn Blinds On`}
+                  onStatusUpdate={() => fetchDeviceStatus("blind")}
+                />
+              )}
+              {blindStatus.includes("Open") && (
+                <HomeDeviceDialog
+                  roomName={roomName}
+                  deviceType="blind"
+                  action="close"
+                  controlDeviceText={`Turn Blinds Off`}
+                  onStatusUpdate={() => fetchDeviceStatus("blind")}
+                />
+              )}
+            </>
+          )}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <RoomTemperatureCard roomName={roomName} />
-      </CardFooter>
     </Card>
   );
 }
