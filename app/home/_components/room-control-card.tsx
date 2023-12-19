@@ -105,7 +105,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
   return (
     <Card>
       <CardTitle className="text-lg font-semibold m-2">
-        {`${roomName} Control Center`}
+        {`${roomName} Kontrol Merkezi`}
       </CardTitle>
       <CardContent className="flex flex-col items-center">
         {/* First row with two dialogs on larger screens */}
@@ -117,7 +117,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
                   roomName={roomName}
                   action="open"
                   deviceType="shutter"
-                  controlDeviceText={`Turn Shutters On`}
+                  controlDeviceText={`Prizleri Aç`}
                   onStatusUpdate={() => fetchDeviceStatus("shutter")}
                 />
               )}
@@ -126,7 +126,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
                   roomName={roomName}
                   action="close"
                   deviceType="shutter"
-                  controlDeviceText={`Turn Shutters Off`}
+                  controlDeviceText={`Prizleri Kapat`}
                   onStatusUpdate={() => fetchDeviceStatus("shutter")}
                 />
               )}
@@ -145,7 +145,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
                   roomName={roomName}
                   action="open"
                   deviceType="light"
-                  controlDeviceText={`Turn Lights On`}
+                  controlDeviceText={`Işıkları Aç`}
                   onStatusUpdate={() => fetchDeviceStatus("light")}
                 />
               )}
@@ -154,7 +154,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
                   roomName={roomName}
                   action="close"
                   deviceType="light"
-                  controlDeviceText={`Turn Lights Off`}
+                  controlDeviceText={`Işıkları Kapat`}
                   onStatusUpdate={() => fetchDeviceStatus("light")}
                 />
               )}
@@ -172,7 +172,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
                   roomName={roomName}
                   deviceType="blind"
                   action="open"
-                  controlDeviceText={`Turn Blinds On`}
+                  controlDeviceText={`Panjurları Aç`}
                   onStatusUpdate={() => fetchDeviceStatus("blind")}
                 />
               )}
@@ -181,7 +181,7 @@ export function RoomControlCard({ roomName }: RoomControlCardProps) {
                   roomName={roomName}
                   deviceType="blind"
                   action="close"
-                  controlDeviceText={`Turn Blinds Off`}
+                  controlDeviceText={`Panjurları Kapat`}
                   onStatusUpdate={() => fetchDeviceStatus("blind")}
                 />
               )}

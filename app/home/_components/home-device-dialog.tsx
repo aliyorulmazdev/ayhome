@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { Eye, EyeOff } from "lucide-react";
+import { Power, PowerOff } from "lucide-react";
 
 interface HomeDeviceDialogProps {
   roomName: string;
@@ -44,13 +44,13 @@ export const HomeDeviceDialog: React.FC<HomeDeviceDialogProps> = ({
       if (response.ok) {
         const result = await response.json();
         console.log(result.message);
-        const actionText = action === "open" ? "opened" : "closed";
-        const successMessage = `The ${deviceType} in the ${roomName} have been ${actionText}.`;
+        const actionText = action === "open" ? "açıldı" : "kapatıldı";
+        const successMessage = `${roomName} içindeki ${deviceType} ${actionText}.`;
 
         toast({
           title: `${
             deviceType.charAt(0).toUpperCase() + deviceType.slice(1)
-          } Control`,
+          } Kontrolü`,
           description: successMessage,
         });
 
@@ -74,23 +74,26 @@ export const HomeDeviceDialog: React.FC<HomeDeviceDialogProps> = ({
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogTrigger asChild>
           <Button variant="outline">
-            {action === "open" ? <Eye /> : <EyeOff />}
+            {action === "open" ? <Power style={{paddingRight:'10px'}}/> : <PowerOff style={{paddingRight:'10px'}}/>}
             {controlDeviceText}
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{`Are you sure you want to ${action} the ${deviceType} in the ${roomName}?`}</AlertDialogTitle>
+            <AlertDialogTitle>{`${roomName} için yaptığınız ${controlDeviceText} işleminden emin misiniz?`}</AlertDialogTitle>
             <AlertDialogDescription>
-              {`This action will `}
-              <span className="text-black dark:text-white">{`${controlDeviceText}`}</span>
-              {` in the ${roomName}.`}
+              {`Bu işlem, `}
+              {`${roomName} için `}
+              <span className="text-black dark:text-white">
+                {`${controlDeviceText}`}
+                {action === "open" ? "acak" : "acak."}.
+              </span>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>İptal</AlertDialogCancel>
             <AlertDialogAction onClick={handleDeviceControl}>
-              Continue
+              Devam Et
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
